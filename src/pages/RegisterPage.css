@@ -1,0 +1,46 @@
+/* RegisterPage.css */
+
+.custom-card {
+    background-color: #1abc9c; /* Set the background color to a shade of green */
+    color: #fff; /* Set the text color to white */
+    border: none; /* Remove the card border */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); /* Add a subtle box shadow */
+    /* animation: fadeIn 1s, scaleUp 1s 0.5s alternate infinite; Apply fadeIn and scaleUp animations */
+  }
+  
+  .custom-button {
+    background-color: #e74c3c; /* Set button background color to a shade of red */
+    border: none; /* Remove button border */
+    animation: pulse 1s infinite; /* Apply a custom pulse animation */
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  
+  @keyframes scaleUp {
+    0% {
+      transform: scale(1);
+    }
+    100% {
+      transform: scale(1.05);
+    }
+  }
+  
+  @keyframes pulse {
+    0% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.1);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+  
