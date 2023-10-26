@@ -1,7 +1,7 @@
 /* RegisterPage.css */
 
 .custom-card {
-    background-color: #1abc9c; /* Set the background color to a shade of green */
+    background: linear-gradient(0.25turn, #3f87a6, #a4c689, #b99f83);;
     color: #fff; /* Set the text color to white */
     border: none; /* Remove the card border */
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); /* Add a subtle box shadow */

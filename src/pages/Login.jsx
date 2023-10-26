@@ -1,11 +1,19 @@
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import Button from "react-bootstrap/Button";
-import React, { useState } from "react";
 import Form from "react-bootstrap/Form";
 import { useFirebase } from "../context/Firebase";
 import "./RegisterPage.css";
 
 const LoginPage = () => {
   const firebase = useFirebase();
+
+  const navigate = useNavigate();
+  useEffect(()=>{
+    if(firebase.isLoggedIn){
+      navigate("/")
+    }
+  },[firebase,navigate])
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -45,6 +53,10 @@ const LoginPage = () => {
                 Login
               </Button>
             </Form>
+            <div className="flex text-center">
+              <h1 className="text-black mt-3 mb-3">OR</h1>
+              <Button variant="success" onClick={firebase.signinWithGoogle}>Sing-In with Google</Button>
+            </div>
           </div>
         </div>
       </div>

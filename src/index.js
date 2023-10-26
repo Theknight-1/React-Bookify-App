@@ -13,7 +13,7 @@ root.render(
       <FirebaseProvider>
         <App />
       </FirebaseProvider>
-     </BrowserRouter>
+     1</BrowserRouter>
   </React.StrictMode>
 );
 
