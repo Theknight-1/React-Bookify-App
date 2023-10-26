@@ -4,20 +4,26 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Navb from '../Components/Navbar';
 
+import { useNavigate } from "react-router-dom";
+
 import {useFirebase} from "../context/Firebase"
 
 const List = () => {
     const firebase = useFirebase();
+    const navigate = useNavigate();
 
 
     const [name, setName] = useState("");
     const [isbnNumber, setIsbnNumber] = useState("");
     const [price, setPrice] = useState("");
     const [coverpic, setCoverPic] = useState("");
+    const [desc, setDesc]= useState("")
 
     const handleSubmit = async(e) => {
         e.preventDefault();
-        await firebase.handleCreateNewListing(name,isbnNumber,price,coverpic);   
+        await firebase.handleCreateNewListing(name,isbnNumber,desc,price,coverpic).then(()=>{
+            navigate("/")
+        });   
     }
     return (
         <>
@@ -43,6 +49,15 @@ const List = () => {
                                         type="text"
                                         placeholder="ISBN Number"
                                         value={isbnNumber}
+                                    />
+                                </Form.Group>
+                                <Form.Group className="mb-3" controlId="formGroupPassword">
+                                    <Form.Label>Enter Description</Form.Label>
+                                    <Form.Control
+                                        onChange={(e) => setDesc(e.target.value)}
+                                        type="text"
+                                        placeholder="Enter Description about the Book"
+                                        value={desc}
                                     />
                                 </Form.Group>
                                 <Form.Group className="mb-3" controlId="formGroupPassword">

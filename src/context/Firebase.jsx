@@ -8,8 +8,8 @@ import {
     signInWithPopup,
     onAuthStateChanged
 } from 'firebase/auth'
-import {getFirestore, collection, addDoc} from "firebase/firestore"
-import {getStorage , ref, uploadBytes} from "firebase/storage"
+import {getFirestore, collection, addDoc, getDocs} from "firebase/firestore"
+import {getStorage , ref, uploadBytes, getDownloadURL} from "firebase/storage"
 
 const FirebaseContext = createContext(null);
 
@@ -59,19 +59,31 @@ export const FirebaseProvider = (props) =>{
     const isLoggedIn = user ? true : false;
     
     //Function for Adding books(Firestor)
-    const handleCreateNewListing = async(name, isbn, price,cover)=>{
+    const handleCreateNewListing = async(name, isbn,desc, price,cover)=>{
         const imageRef = ref(storage, `uploads/images/${Date.now()}-${cover.name}`)
         const uploadResult  = await uploadBytes(imageRef, cover)
-        return await addDoc(collection(firestore, 'books'),{
-            name,
-            isbn,
-            price,
-            imageURL: uploadResult.ref.fullPath,
-            userID:user.uid,
-            userEmail:user.email,
-            displayName: user.displayName,
-            photoURL : user.photoURL
-        });
+        try {
+            return await addDoc(collection(firestore, 'books'),{
+                name,
+                isbn,
+                desc,
+                price,
+                imageURL: uploadResult.ref.fullPath,
+                userID:user.uid,
+                userEmail:user.email,
+                displayName: user.displayName,
+                photoURL : user.photoURL
+            });
+        } catch (error) {
+            throw new Error(error)   
+        }
+    }
+    //Function to get Books
+    const listAllBooks = () =>{
+        return getDocs(collection(firestore, 'books'))
+    }
+    const getImageURL = (path)=>{
+        return getDownloadURL(ref(storage, path))
     }
     return (
         <FirebaseContext.Provider 
@@ -80,7 +92,9 @@ export const FirebaseProvider = (props) =>{
             signinUserWithEmailAndPassword, 
             signinWithGoogle, 
             isLoggedIn,
-            handleCreateNewListing
+            handleCreateNewListing,
+            listAllBooks,
+            getImageURL
         }}>
             {props.children}
         </FirebaseContext.Provider>
