@@ -1,4 +1,4 @@
-import { createContext, useContext ,useState, useEffect} from "react";
+import { createContext, useContext ,useState, useEffect, useReducer} from "react";
 import { initializeApp } from "firebase/app";
 import {
     getAuth,
@@ -8,7 +8,7 @@ import {
     signInWithPopup,
     onAuthStateChanged
 } from 'firebase/auth'
-import {getFirestore, collection, addDoc, getDocs} from "firebase/firestore"
+import {getFirestore, collection, addDoc, getDocs, doc, getDoc} from "firebase/firestore"
 import {getStorage , ref, uploadBytes, getDownloadURL} from "firebase/storage"
 
 const FirebaseContext = createContext(null);
@@ -82,9 +82,40 @@ export const FirebaseProvider = (props) =>{
     const listAllBooks = () =>{
         return getDocs(collection(firestore, 'books'))
     }
+    //Function to get books by ID
+    const getBookByID =async (id)=>{
+        const docRef = doc(firestore, "books", id);
+        const result = await getDoc(docRef);
+        return result;
+    }
     const getImageURL = (path)=>{
         return getDownloadURL(ref(storage, path))
+    };
+
+    const placeOrder =async (bookID, qty)=>{
+        const collectionRef = collection(firestore, 'books', bookID,'orders');
+        const result = await addDoc(collectionRef,{
+            userID:user.uid,
+            userEmail:user.email,
+            displayName: user.displayName,
+            photoURL : user.photoURL,
+            qty : Number(qty)
+        });
+        return result;
     }
+    const giveFeedback =async (bookID, feedback)=>{
+        const collectionRef = collection(firestore, 'books', bookID,'feedback');
+        const result = await addDoc(collectionRef,{
+            userID:user.uid,
+            userEmail:user.email,
+            displayName: user.displayName,
+            photoURL : user.photoURL,
+            feedback
+        });
+        return result;
+    }
+
+
     return (
         <FirebaseContext.Provider 
         value={{
@@ -94,7 +125,10 @@ export const FirebaseProvider = (props) =>{
             isLoggedIn,
             handleCreateNewListing,
             listAllBooks,
-            getImageURL
+            getImageURL,
+            getBookByID,
+            placeOrder,
+            giveFeedback
         }}>
             {props.children}
         </FirebaseContext.Provider>

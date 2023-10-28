@@ -13,7 +13,6 @@ const Home = () => {
     useEffect(() => {
         firebase.listAllBooks().then((books) => {
             setBooks(books.docs);
-            console.log(books.docs[0].data());
         })
     }, [])
 
