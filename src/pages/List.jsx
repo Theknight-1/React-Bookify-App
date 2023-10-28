@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
@@ -19,12 +19,6 @@ const List = () => {
     const [coverpic, setCoverPic] = useState("");
     const [desc, setDesc] = useState("")
 
-
-    useEffect(()=>{
-        if (!firebase.user) {
-            navigate("/login")
-        }
-    },[firebase])
     
 
     const handleSubmit = async (e) => {

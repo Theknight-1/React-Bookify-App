@@ -21,11 +21,11 @@ const Home = () => {
     return (
         <>
             <Navb />
-            <div className='container mt-5'>
+            <div className='container mt-3'>
                 <Row>
                     {
-                        books.map((book) => {
-                            return <Card key={book.id} id={book.id} {...book.data()} />
+                        books.map((book, index) => {
+                            return <Card key={book.id} id={book.id} index={index} {...book.data()} />
                         })
                     }
                 </Row>
