@@ -9,19 +9,19 @@ const LoginPage = () => {
   const firebase = useFirebase();
 
   const navigate = useNavigate();
-  useEffect(()=>{
-    if(firebase.isLoggedIn){
+  useEffect(() => {
+    if (firebase.isLoggedIn) {
       navigate("/")
     }
-  },[firebase,navigate])
+  }, [firebase, navigate])
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleSubmit = async(e) =>{
+  const handleSubmit = async (e) => {
     e.preventDefault();
     console.log('Login a user...');
-    await firebase.signinUserWithEmailAndPassword(email,password);
+    await firebase.signinUserWithEmailAndPassword(email, password);
     console.log("Login done");
   }
 
@@ -49,9 +49,14 @@ const LoginPage = () => {
                   value={password}
                 />
               </Form.Group>
-              <Button variant="primary" type="submit" className="custom-button">
-                Login
-              </Button>
+              <div className="d-flex gap-3">
+                <Button variant="primary" type="submit" className="custom-button">
+                  Login
+                </Button>
+                <Button variant="primary" type="submit" className="custom-button" href="/sign-up">
+                  Go to Sign-Up
+                </Button>
+              </div>
             </Form>
             <div className="flex text-center">
               <h1 className="text-black mt-3 mb-3">OR</h1>

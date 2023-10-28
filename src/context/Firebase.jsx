@@ -1,4 +1,4 @@
-import { createContext, useContext ,useState, useEffect, useReducer} from "react";
+import { createContext, useContext ,useState, useEffect} from "react";
 import { initializeApp } from "firebase/app";
 import {
     getAuth,
@@ -6,9 +6,10 @@ import {
     signInWithEmailAndPassword,
     GoogleAuthProvider,
     signInWithPopup,
-    onAuthStateChanged
+    onAuthStateChanged,
+    signOut
 } from 'firebase/auth'
-import {getFirestore, collection, addDoc, getDocs, doc, getDoc} from "firebase/firestore"
+import {getFirestore, collection, addDoc, getDocs, doc, getDoc, query,  where} from "firebase/firestore"
 import {getStorage , ref, uploadBytes, getDownloadURL} from "firebase/storage"
 
 const FirebaseContext = createContext(null);
@@ -28,6 +29,7 @@ export const useFirebase = ()=> useContext(FirebaseContext);
 // Initialize Firebase
 const firebaseApp = initializeApp(firebaseConfig);
 const firebaseAuth = getAuth(firebaseApp);
+const auth = getAuth()
 
 //GoogleProvider
 const googleProvider = new GoogleAuthProvider()
@@ -114,8 +116,22 @@ export const FirebaseProvider = (props) =>{
         });
         return result;
     }
-
-
+    const fetchMyBooks = async(userID) =>{
+        const collectionRef = collection(firestore,'books');
+        const q= query(collectionRef, where('userID', '==', userID));
+        const result = await getDocs(q);
+        return result
+    }
+    const getOrders = async(bookID)=>{
+        const collectionRef = collection(firestore,'books',bookID,'orders');
+        const result = getDocs(collectionRef);
+        return result;
+    }
+    const signingOut = ()=>{
+        signOut(auth).then(()=>{
+            console.log("User signOut successfull");
+        })
+    }
     return (
         <FirebaseContext.Provider 
         value={{
@@ -128,7 +144,11 @@ export const FirebaseProvider = (props) =>{
             getImageURL,
             getBookByID,
             placeOrder,
-            giveFeedback
+            giveFeedback,
+            fetchMyBooks,
+            user,
+            getOrders,
+            signingOut
         }}>
             {props.children}
         </FirebaseContext.Provider>

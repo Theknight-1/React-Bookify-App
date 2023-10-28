@@ -49,9 +49,14 @@ const RegisterPage = () => {
                   value={password}
                 />
               </Form.Group>
-              <Button variant="primary" type="submit" className="custom-button">
-                Register
-              </Button>
+              <div className="d-flex gap-3">
+              <Button variant="primary" type="submit" className="custom-button" href="/sign-up">
+                  Sign-Up
+                </Button>
+                <Button variant="primary" type="submit" className="custom-button" href="/login">
+                  Go to Login
+                </Button>
+              </div>
             </Form>
           </div>
         </div>

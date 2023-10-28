@@ -48,5 +48,5 @@
 .bg-success-lighter {
   background-color: #e8ffd3; /* You can adjust the color code to make it lighter or darker */
   /* Other styles if needed */
-  height: 650px;
+  max-height: 650px;
 }

@@ -11,6 +11,8 @@ import LoginPage from "./pages/Login";
 import Home from "./pages/Home";
 import List from "./pages/List";
 import BookDetail from "./pages/Detail";
+import ViewOrder from "./pages/ViewOrder";
+import ViewOrderDetail from "./pages/ViewOrderDetail";
 
 function App() {
   return (
@@ -20,6 +22,8 @@ function App() {
       <Route path="/sign-up" element={<RegisterPage/>} />
       <Route path="/book/listing" element={<List/>} />
       <Route path="book/view/:bookID" element={<BookDetail/>} />
+      <Route path="book/orders" element={<ViewOrder/>} />
+      <Route path="books/orders/:bookId" exact element={<ViewOrderDetail/>} />
     </Routes>
   );
 }

@@ -10,7 +10,7 @@ const BookDetail = () => {
   const params = useParams();
   const firebase = useFirebase();
   const [data, setData] = useState();
-  const [qty, setQty] = useState(1);
+  const [qty, setQty] = useState();
   const [feedback, setFeedback] = useState("");
   const [url, setURL] = useState(null);
 
@@ -34,6 +34,7 @@ const BookDetail = () => {
     e.preventDefault();
     const result = await firebase.giveFeedback(params.bookID, feedback)
     console.log("Order placed", result.data);
+    e.target.value= null
   }
 
 
@@ -48,7 +49,7 @@ const BookDetail = () => {
           data && <h1 className='flex text-center'>{data.name}</h1>
         }
         <div className='bg-success-lighter'>
-          <div className='p-4' style={{ display: "block", margin: "auto", width: "1000px", height: "650px" }}>
+          <div className='p-4' style={{ display: "block", margin: "auto", maxWidth: "500px", maxHeight: "650px" }}>
             <img src={url} alt="" width={"100%"} height={"100%"} style={{ borderRadius: "20px" }} />
           </div>
         </div>
@@ -68,11 +69,11 @@ const BookDetail = () => {
         <Button onClick={placeOrder}>Buy Now</Button>
         <h1>Owner Details</h1>
         <div className='bg-grey'>
-          <div className='d-flex mt-4'>
+          <div className='d-flex mt-4 p-2 gap-3'>
             {
-              data && <img src={data.photoURL} alt="" style={{ borderRadius: "50px" }} />
+              data && <img src={data.photoURL} alt=""   style={{ borderRadius: "50px",maxWidth:"50px",maxHeight:"50px" }} />
             }
-            <div className='m-3'>
+            <div>
               {
                 data && data.displayName
               }

@@ -5,7 +5,7 @@ import { Row } from 'react-bootstrap';
 
 //Components
 import Navb from '../Components/Navbar'
-import Card from '../Components/Card';
+import Card from '../Components/BookCard';
 
 const Home = () => {
     const firebase = useFirebase();
@@ -14,7 +14,7 @@ const Home = () => {
         firebase.listAllBooks().then((books) => {
             setBooks(books.docs);
         })
-    }, [])
+    }, [firebase])
 
 
 
@@ -25,7 +25,7 @@ const Home = () => {
                 <Row>
                     {
                         books.map((book) => {
-                            return <Card  key={book.id} id={book.id} {...book.data()}/>
+                            return <Card key={book.id} id={book.id} {...book.data()} />
                         })
                     }
                 </Row>

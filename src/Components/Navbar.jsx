@@ -2,15 +2,34 @@ import React from "react";
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
+import { useFirebase } from "../context/Firebase";
+import { Button } from "react-bootstrap";
 
 const Navb = () => {
+    const firebase = useFirebase();
+    const signOutUser =()=>{
+        firebase.signingOut();
+    }
     return (
         <Navbar bg="dark" data-bs-theme="dark">
             <Container>
-                <Navbar.Brand href="/">Navbar</Navbar.Brand>
+                <Navbar.Brand href="/">Bookify</Navbar.Brand>
                 <Nav className="me-auto">
                     <Nav.Link href="/">Home</Nav.Link>
                     <Nav.Link href="/book/listing">Add Listing</Nav.Link>
+                    <Nav.Link href="/book/orders">Orders</Nav.Link>
+                </Nav>
+                <Nav>
+                    {
+                        !firebase.user &&
+                        <Nav.Link href="/login">Login</Nav.Link>
+                        ||
+                        <Button onClick={signOutUser}>Sign-Out</Button>
+                    }
+                    {
+                        !firebase.user &&
+                        <Nav.Link href="/sign-up">Sign-up</Nav.Link>
+                    }
                 </Nav>
             </Container>
         </Navbar>

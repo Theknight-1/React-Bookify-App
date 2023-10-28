@@ -6,7 +6,7 @@ import Navb from '../Components/Navbar';
 
 import { useNavigate } from "react-router-dom";
 
-import {useFirebase} from "../context/Firebase"
+import { useFirebase } from "../context/Firebase"
 
 const List = () => {
     const firebase = useFirebase();
@@ -17,17 +17,23 @@ const List = () => {
     const [isbnNumber, setIsbnNumber] = useState("");
     const [price, setPrice] = useState("");
     const [coverpic, setCoverPic] = useState("");
-    const [desc, setDesc]= useState("")
+    const [desc, setDesc] = useState("")
 
-    const handleSubmit = async(e) => {
+
+
+    if (!firebase.user) {
+        navigate("/login")
+    }
+
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        await firebase.handleCreateNewListing(name,isbnNumber,desc,price,coverpic).then(()=>{
+        await firebase.handleCreateNewListing(name, isbnNumber, desc, price, coverpic).then(() => {
             navigate("/")
-        });   
+        });
     }
     return (
         <>
-            <Navb/>
+            <Navb />
             <div className="container mt-5">
                 <div className="row justify-content-center">
                     <div className="col-md-6">

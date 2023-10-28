@@ -4,7 +4,6 @@ import Card from 'react-bootstrap/Card';
 import { useFirebase } from '../context/Firebase';
 import { Col } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
-import "./card.css"
 
 const BookCard = (props) => {
     const [url, setURL] = useState(null);
@@ -14,11 +13,11 @@ const BookCard = (props) => {
         firebase.getImageURL(props.imageURL).then((url) => {
             setURL(url)
         })
-    }, [])
+    }, [firebase])
     return (
         <Col className='singleCard mt-2'>
             <Card style={{ width: '25rem', height: "25rem", boxShadow: "rgba(0, 0, 0, 0.35) 0px 5px 15px" }} >
-                <Card.Img variant="top" src={url} style={{ height: "15rem", objectFit: "cover" }} />
+                <Card.Img variant="top" src={url} style={{height:"15rem", objectFit: "cover" }} />
                 <Card.Body>
                     <Card.Title>{props.name.slice(0, 40)}</Card.Title>
                     <Card.Text>
