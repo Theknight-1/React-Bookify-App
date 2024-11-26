@@ -29,6 +29,11 @@ const Home = () => {
                         })
                     }
                 </Row>
+                {
+                    books.length === 0 && (
+                        <div className='d-flex text-center display-4'>nothing to show</div>
+                    )
+                }
             </div>
         </>
     )

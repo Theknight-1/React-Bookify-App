@@ -15,7 +15,7 @@ const BookCard = (props) => {
         firebase.getImageURL(props.imageURL).then((url) => {
             setURL(url);
         });
-    }, [firebase]);
+    }, [firebase, props.imageURL]);
 
     return (
             <Col className='singleCard m-2'>
@@ -33,9 +33,9 @@ const BookCard = (props) => {
                                     </p>
                             }
                         </Card.Text>
-                        <div className='d-flex justify-content-between'>
+                        <div className='d-flex justify-content-between '>
                             <Button onClick={e => navigate(`/book/view/${props.id}`)} variant="primary">View</Button>
-                            <span className='font-weight-bolder'>Published By : {props.displayName}</span>
+                            <span className='font-weight-bolder text-wrap'>Published By : {props.displayName}</span>
                             <img src={props.photoURL} alt="UPLOADED BY" style={{ borderRadius: "50%", height: "35px" }} />
                         </div>
                     </Card.Body>
